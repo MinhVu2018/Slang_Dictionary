@@ -185,6 +185,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnDeleteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnFind">
       <Properties>
@@ -198,21 +201,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="History"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHistoryActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnAdd">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAddActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnEdit">
       <Properties>
         <Property name="text" type="java.lang.String" value="Edit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEditActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnReset">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reset"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnResetActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnQuiz">
       <Properties>
@@ -226,6 +241,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Random"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRandomActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

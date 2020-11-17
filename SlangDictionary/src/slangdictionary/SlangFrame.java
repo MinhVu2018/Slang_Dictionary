@@ -6,6 +6,7 @@
 package slangdictionary;
 
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
@@ -34,8 +35,6 @@ public class SlangFrame extends javax.swing.JFrame {
     public void displaySlangDefinition(){
         SlangDef.setText("<html>What is slang word? <br> I dont know ... </html>");
     }
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,6 +92,11 @@ public class SlangFrame extends javax.swing.JFrame {
         ResultOutput.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         BtnDelete.setText("Delete");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
 
         BtnFind.setText("Find");
         BtnFind.addActionListener(new java.awt.event.ActionListener() {
@@ -102,12 +106,32 @@ public class SlangFrame extends javax.swing.JFrame {
         });
 
         BtnHistory.setText("History");
+        BtnHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHistoryActionPerformed(evt);
+            }
+        });
 
         BtnAdd.setText("Add");
+        BtnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAddActionPerformed(evt);
+            }
+        });
 
         BtnEdit.setText("Edit");
+        BtnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditActionPerformed(evt);
+            }
+        });
 
         BtnReset.setText("Reset");
+        BtnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnResetActionPerformed(evt);
+            }
+        });
 
         BtnQuiz.setText("Quiz");
         BtnQuiz.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +141,11 @@ public class SlangFrame extends javax.swing.JFrame {
         });
 
         BtnRandom.setText("Random");
+        BtnRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRandomActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,9 +266,50 @@ public class SlangFrame extends javax.swing.JFrame {
     private void BtnQuizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnQuizActionPerformed
         // TODO add your handling code here:
         // random in 2 mth
+        Random generator = new Random();
+        int a = generator.nextInt(2);
+        if (a == 0)
+            ResultOutput.setText("Type 1");
+        else 
+            ResultOutput.setText("Type 2");
+        
         QuizFrame frame = new QuizFrame();
         frame.show();
     }//GEN-LAST:event_BtnQuizActionPerformed
+
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        // TODO add your handling code here:
+        ResultOutput.setText("Remove a word");
+    }//GEN-LAST:event_BtnDeleteActionPerformed
+
+    private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
+        // TODO add your handling code here:
+        ResultOutput.setText("Add a new word. Confirm?");
+    }//GEN-LAST:event_BtnAddActionPerformed
+
+    private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
+        // TODO add your handling code here:
+        ResultOutput.setText("Edit a word");
+    }//GEN-LAST:event_BtnEditActionPerformed
+
+    private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
+        // TODO add your handling code here:
+        ResultOutput.setText("Reset dictionary");
+    }//GEN-LAST:event_BtnResetActionPerformed
+
+    private void BtnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistoryActionPerformed
+        // TODO add your handling code here:
+        HistoryFrame frame = new HistoryFrame();
+        frame.show();
+    }//GEN-LAST:event_BtnHistoryActionPerformed
+
+    private void BtnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRandomActionPerformed
+        // TODO add your handling code here:
+        Random generator = new Random();
+        ResultOutput.setText(Integer.toString(generator.nextInt(100)));
+        WordInput.setText("YOLO");
+        DefInput.setText("You Only Live Once");
+    }//GEN-LAST:event_BtnRandomActionPerformed
 
     /**
      * @param args the command line arguments
