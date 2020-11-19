@@ -6,6 +6,7 @@
 package slangdictionary;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -18,6 +19,8 @@ public class SlangFrame extends javax.swing.JFrame {
     /**
      * Creates new form SlangFrame
      */
+    Trie data = new Trie();
+    
     public SlangFrame() {
         initComponents();
         scaleImage();
@@ -25,7 +28,7 @@ public class SlangFrame extends javax.swing.JFrame {
     }
 
     public void scaleImage(){
-        ImageIcon icon = new ImageIcon("Image/logo.png");
+        ImageIcon icon = new ImageIcon("Data/logo.png");
         Image img = icon.getImage();
         Image imgscale = img.getScaledInstance(LogoLabel.getWidth(), LogoLabel.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(imgscale);
@@ -34,6 +37,20 @@ public class SlangFrame extends javax.swing.JFrame {
     
     public void displaySlangDefinition(){
         SlangDef.setText("<html>What is slang word? <br> I dont know ... </html>");
+    }
+    
+    public void Searching(){
+        String Word_Input = WordInput.getText();
+        String Def_Input = DefInput.getText();
+        
+        if (Word_Input.trim().isEmpty() && Def_Input.trim().isEmpty())
+            ResultOutput.setText("Input plz");
+        else if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty())
+            ResultOutput.setText("You cannot find both of them at the same time.");
+//        else if (Def_Input.trim().isEmpty())
+//            ResultOutput.setText(data.Search(Word_Input, 0));
+//        else if (Word_Input.trim().isEmpty())
+//            ResultOutput.setText(data.Search(Def_Input, 1));  
     }
     
     /**
@@ -64,6 +81,7 @@ public class SlangFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Slang Dictionary");
+        setBackground(new java.awt.Color(255, 255, 255));
 
         LogoLabel.setText("Logo");
 
@@ -73,17 +91,17 @@ public class SlangFrame extends javax.swing.JFrame {
 
         DefArea.setText("Definition:");
 
-        WordInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WordInputActionPerformed(evt);
+        WordInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                WordInputKeyPressed(evt);
             }
         });
 
         AnsArea.setText("Result:");
 
-        DefInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DefInputActionPerformed(evt);
+        DefInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DefInputKeyPressed(evt);
             }
         });
 
@@ -238,29 +256,9 @@ public class SlangFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void DefInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DefInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DefInputActionPerformed
-
-    private void WordInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WordInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_WordInputActionPerformed
-
     private void BtnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFindActionPerformed
         // TODO add your handling code here:
-        String Word_Input = WordInput.getText();
-        String Def_Input = DefInput.getText();
-        
-        ResultOutput.setText(Integer.toString(Word_Input.length()));
-        
-        if (Word_Input.trim().isEmpty() && Def_Input.trim().isEmpty())
-            ResultOutput.setText("Input plz");
-        else if (Word_Input.trim().isEmpty())
-            ResultOutput.setText("Search for Words");
-        else if (Def_Input.trim().isEmpty())
-            ResultOutput.setText("Search for Definition");
-        else
-            ResultOutput.setText("Google is free bro");
+        Searching();
     }//GEN-LAST:event_BtnFindActionPerformed
 
     private void BtnQuizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnQuizActionPerformed
@@ -310,6 +308,18 @@ public class SlangFrame extends javax.swing.JFrame {
         WordInput.setText("YOLO");
         DefInput.setText("You Only Live Once");
     }//GEN-LAST:event_BtnRandomActionPerformed
+
+    private void WordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WordInputKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            Searching();
+    }//GEN-LAST:event_WordInputKeyPressed
+
+    private void DefInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DefInputKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            Searching();
+    }//GEN-LAST:event_DefInputKeyPressed
 
     /**
      * @param args the command line arguments
