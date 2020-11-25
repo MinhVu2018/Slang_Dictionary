@@ -19,9 +19,9 @@ public class SlangFrame extends javax.swing.JFrame {
     /**
      * Creates new form SlangFrame
      */
-    Trie data = new Trie();
-    
+    DataGenerator data = new DataGenerator();
     public SlangFrame() {
+        data.Create("Data/slang.txt");
         initComponents();
         scaleImage();
         displaySlangDefinition();
@@ -40,17 +40,17 @@ public class SlangFrame extends javax.swing.JFrame {
     }
     
     public void Searching(){
-        String Word_Input = WordInput.getText();
-        String Def_Input = DefInput.getText();
+        String Word_Input = WordInput.getText().toUpperCase();
+        String Def_Input = DefInput.getText().toLowerCase();
         
         if (Word_Input.trim().isEmpty() && Def_Input.trim().isEmpty())
             ResultOutput.setText("Input plz");
         else if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty())
             ResultOutput.setText("You cannot find both of them at the same time.");
-//        else if (Def_Input.trim().isEmpty())
-//            ResultOutput.setText(data.Search(Word_Input, 0));
-//        else if (Word_Input.trim().isEmpty())
-//            ResultOutput.setText(data.Search(Def_Input, 1));  
+        else if (Def_Input.trim().isEmpty())
+            ResultOutput.setText(data.Search(Word_Input, 0));
+        else if (Word_Input.trim().isEmpty())
+            ResultOutput.setText(data.Search(Def_Input, 1)); 
     }
     
     /**
@@ -277,7 +277,8 @@ public class SlangFrame extends javax.swing.JFrame {
 
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
         // TODO add your handling code here:
-        ResultOutput.setText("Remove a word");
+        String Word_Input = WordInput.getText().toUpperCase();
+        data.Remove(Word_Input);
     }//GEN-LAST:event_BtnDeleteActionPerformed
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
@@ -303,10 +304,10 @@ public class SlangFrame extends javax.swing.JFrame {
 
     private void BtnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRandomActionPerformed
         // TODO add your handling code here:
-        Random generator = new Random();
-        ResultOutput.setText(Integer.toString(generator.nextInt(100)));
-        WordInput.setText("YOLO");
-        DefInput.setText("You Only Live Once");
+        String[] temp = data.DisplayRandom();
+        
+        WordInput.setText(temp[0]);
+        DefInput.setText(temp[1]);
     }//GEN-LAST:event_BtnRandomActionPerformed
 
     private void WordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WordInputKeyPressed

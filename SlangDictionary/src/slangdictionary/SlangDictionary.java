@@ -16,6 +16,10 @@ public class SlangDictionary {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+//        DataGenerator data = new DataGenerator();
+//        data.readfile("Data/slang.txt");
+        
         // call SlangFrame
         SlangFrame frame = new SlangFrame();
         
