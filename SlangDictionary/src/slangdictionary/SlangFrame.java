@@ -7,7 +7,7 @@ package slangdictionary;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+import java.util.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -69,7 +69,6 @@ public class SlangFrame extends javax.swing.JFrame {
         WordInput = new javax.swing.JTextField();
         AnsArea = new javax.swing.JLabel();
         DefInput = new javax.swing.JTextField();
-        ResultOutput = new javax.swing.JLabel();
         BtnDelete = new javax.swing.JButton();
         BtnFind = new javax.swing.JButton();
         BtnHistory = new javax.swing.JButton();
@@ -78,10 +77,13 @@ public class SlangFrame extends javax.swing.JFrame {
         BtnReset = new javax.swing.JButton();
         BtnQuiz = new javax.swing.JButton();
         BtnRandom = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ResultOutput = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Slang Dictionary");
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         LogoLabel.setText("Logo");
 
@@ -104,10 +106,6 @@ public class SlangFrame extends javax.swing.JFrame {
                 DefInputKeyPressed(evt);
             }
         });
-
-        ResultOutput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ResultOutput.setText("Search Google plz");
-        ResultOutput.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         BtnDelete.setText("Delete");
         BtnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +163,12 @@ public class SlangFrame extends javax.swing.JFrame {
             }
         });
 
+        ResultOutput.setEditable(false);
+        ResultOutput.setColumns(20);
+        ResultOutput.setRows(5);
+        ResultOutput.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(ResultOutput);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,28 +177,27 @@ public class SlangFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 77, Short.MAX_VALUE)
                         .addComponent(LogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(SlangDef, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(WordArea)
+                                    .addGap(23, 23, 23))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(DefArea)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(AnsArea)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ResultOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(WordArea)
-                                        .addGap(23, 23, 23))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(DefArea)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(WordInput)
-                                    .addComponent(DefInput, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(19, 19, 19)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(WordInput)
+                            .addComponent(DefInput, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(BtnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -247,8 +250,8 @@ public class SlangFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtnQuiz)
                             .addComponent(BtnRandom)))
-                    .addComponent(ResultOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         LogoLabel.getAccessibleContext().setAccessibleName("LogoLabel");
@@ -283,12 +286,26 @@ public class SlangFrame extends javax.swing.JFrame {
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
         // TODO add your handling code here:
         String Word_Input = WordInput.getText().toUpperCase();
-        data.Remove(Word_Input);
+        String Def_Input = DefInput.getText().toLowerCase();
+        
+        if (!Word_Input.trim().isEmpty()&& Def_Input.trim().isEmpty())
+            data.Remove(Word_Input);
+        else
+            ResultOutput.setText("Please enter a slangword");
     }//GEN-LAST:event_BtnDeleteActionPerformed
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
         // TODO add your handling code here:
-        ResultOutput.setText("Add a new word. Confirm?");
+//        ResultOutput.setText("Add a new word. Confirm?");
+        String Word_Input = WordInput.getText().toUpperCase();
+        String Def_Input = DefInput.getText().toLowerCase();
+        
+        if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty()){
+            data.Add(Word_Input, Def_Input);
+            ResultOutput.setText("Add successful");
+        }
+        else
+            ResultOutput.setText("Input word and definition");
     }//GEN-LAST:event_BtnAddActionPerformed
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
@@ -303,7 +320,7 @@ public class SlangFrame extends javax.swing.JFrame {
 
     private void BtnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistoryActionPerformed
         // TODO add your handling code here:
-        HistoryFrame frame = new HistoryFrame();
+        HistoryFrame frame = new HistoryFrame(data.History);
         frame.show();
     }//GEN-LAST:event_BtnHistoryActionPerformed
 
@@ -375,9 +392,10 @@ public class SlangFrame extends javax.swing.JFrame {
     private javax.swing.JLabel DefArea;
     private javax.swing.JTextField DefInput;
     private javax.swing.JLabel LogoLabel;
-    private javax.swing.JLabel ResultOutput;
+    private javax.swing.JTextArea ResultOutput;
     private javax.swing.JLabel SlangDef;
     private javax.swing.JLabel WordArea;
     private javax.swing.JTextField WordInput;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

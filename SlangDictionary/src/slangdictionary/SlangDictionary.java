@@ -25,7 +25,6 @@ public class SlangDictionary {
         
         // show frame
         frame.show();
-        
     }
     
 }

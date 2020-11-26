@@ -16,10 +16,12 @@ import java.util.*;
 public class DataGenerator {
     HashMap<String, String> SlangWordList = new HashMap<String, String>();
     HashMap<String, HashSet<String>> MeaningList = new HashMap<String, HashSet<String>>();
-    String default_path = "Data/slang.txt";
+    Deque<String> History = new ArrayDeque<String>();
+    
+    String default_path = "Data/slang_default.txt";
     String history_file_path = "Data/history.txt";
     String meaning_file_path = "Data/meaning.txt";
-    String slang_file_path = "data/slang.txt";
+    String slang_file_path = "Data/slang.txt";
     
     void Create(String file_path){
         try {
@@ -53,6 +55,7 @@ public class DataGenerator {
     }
     
     String Search(String s, int type){
+        History.push(s);
         if (type == 0)//Search for meaning
         {
             String ans = SlangWordList.get(s);
@@ -63,7 +66,6 @@ public class DataGenerator {
         
         if (s.isEmpty())
             return "Cannot find";
-        
         
         s = s.toLowerCase();
         String[] temp = s.split(" ");
@@ -95,8 +97,30 @@ public class DataGenerator {
         SlangWordList.remove(word);
     }
     
-    void Add(String word, String meaning){
-        SlangWordList.put(word.toLowerCase(), meaning);
+    void Add(String word, String definition){
+        if (SlangWordList.get(word) == null){ // cannot find
+            SlangWordList.put(word, definition);
+            CreateMeaningList(word, definition.toLowerCase());
+        }
+        else{
+            DuplicateAddFrame frame = new DuplicateAddFrame(word, SlangWordList.get(word), definition);
+            frame.show();
+            
+            if (!frame.isVisible()){
+                System.out.println("herre");
+                String meaning = SlangWordList.get(word);
+                Remove(word);
+
+                System.out.println(frame.selection);
+                if (frame.selection.equals("Override"))
+                    Add(word, definition);
+                else if(frame.selection.equals("Duplicate"))
+                {
+                    meaning += "| " + definition;
+                    Add(word, meaning);
+                }
+            }
+        }
     }
     
     void Edit(String word, String meaning){
