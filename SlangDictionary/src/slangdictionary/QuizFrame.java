@@ -5,6 +5,9 @@
  */
 package slangdictionary;
 
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
+
 /**
  *
  * @author MinhVu
@@ -14,10 +17,25 @@ public class QuizFrame extends javax.swing.JFrame {
     /**
      * Creates new form Quiz
      */
+    
+    String ans = new String();
+    
     public QuizFrame() {
         initComponents();
     }
 
+    public QuizFrame(String[] quiz){
+        initComponents();
+        
+        // quiz[option1, option2, option3, option4, question]
+        Question.setText(quiz[4]);
+        Option1.setText(quiz[0]);
+        Option2.setText(quiz[1]);
+        Option3.setText(quiz[2]);
+        Option4.setText(quiz[3]);
+        ans = quiz[5];
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,22 +46,54 @@ public class QuizFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        Question = new javax.swing.JLabel();
+        Option1 = new javax.swing.JRadioButton();
+        Option2 = new javax.swing.JRadioButton();
+        Option3 = new javax.swing.JRadioButton();
+        Option4 = new javax.swing.JRadioButton();
+        Submit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Quiz");
 
-        jLabel1.setText("Đây là câu hỏi ?");
+        Question.setText("Đây là câu hỏi ?");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Câu hỏi đó ba");
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Hỏi gì hỏi đi chứ");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(Option1);
+        Option1.setText("Câu hỏi đó ba");
+        Option1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                Option1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(Option2);
+        Option2.setText("Hỏi gì hỏi đi chứ");
+        Option2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Option2ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(Option3);
+        Option3.setText("Chả lẽ câu trả lời ?");
+        Option3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Option3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(Option4);
+        Option4.setText("Méo phải đâu !!");
+        Option4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Option4ActionPerformed(evt);
+            }
+        });
+
+        Submit.setText("Spam");
+        Submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubmitActionPerformed(evt);
             }
         });
 
@@ -52,35 +102,82 @@ public class QuizFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Option2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Option3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                    .addComponent(Option4, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                    .addComponent(Option1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Question, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(Submit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Question, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
-                .addGap(26, 26, 26)
-                .addComponent(jRadioButton2)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(Option1)
+                .addGap(18, 18, 18)
+                .addComponent(Option2)
+                .addGap(18, 18, 18)
+                .addComponent(Option3)
+                .addGap(18, 18, 18)
+                .addComponent(Option4)
+                .addGap(18, 18, 18)
+                .addComponent(Submit)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void Option2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Option2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_Option2ActionPerformed
 
+    private void Option3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Option3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Option3ActionPerformed
+
+    private void Option4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Option4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Option4ActionPerformed
+
+    private void Option1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Option1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Option1ActionPerformed
+
+    public String getSelectedButtonText() {
+        for (Enumeration<AbstractButton> buttons = buttonGroup1.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+    
+    private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
+        // TODO add your handling code here:
+        if (ans.equals(getSelectedButtonText()))
+            Submit.setText("Correct!");
+        else
+            Submit.setText("Try Again");
+    }//GEN-LAST:event_SubmitActionPerformed
+    
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -115,9 +212,12 @@ public class QuizFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Option1;
+    private javax.swing.JRadioButton Option2;
+    private javax.swing.JRadioButton Option3;
+    private javax.swing.JRadioButton Option4;
+    private javax.swing.JLabel Question;
+    private javax.swing.JButton Submit;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
 }

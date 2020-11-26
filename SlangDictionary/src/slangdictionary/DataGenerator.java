@@ -16,6 +16,10 @@ import java.util.*;
 public class DataGenerator {
     HashMap<String, String> SlangWordList = new HashMap<String, String>();
     HashMap<String, HashSet<String>> MeaningList = new HashMap<String, HashSet<String>>();
+    String default_path = "Data/slang.txt";
+    String history_file_path = "Data/history.txt";
+    String meaning_file_path = "Data/meaning.txt";
+    String slang_file_path = "data/slang.txt";
     
     void Create(String file_path){
         try {
@@ -104,7 +108,50 @@ public class DataGenerator {
         Add(word, meaning);
     }
     
-    void CreateQuiz(){
+    String[] QuizType1(){
+        //int value = generator.nextInt((max - min) + 1) + min;
+        Random generator = new Random();
+        List<String> keys = new ArrayList<String>(SlangWordList.keySet());
+        
+        String[] ans = new String[6];
+        String Key = keys.get(generator.nextInt(keys.size()));
+        String Value = SlangWordList.get(Key);
+        
+        for(int i=0; i<4; i++)
+        {
+            String randomKey = keys.get(generator.nextInt(keys.size()));
+            String randomValue = SlangWordList.get(randomKey);
+            ans[i] = randomValue;
+        }
+        
+        int randIndex = generator.nextInt((3-0) + 1) + 0;
+        ans[randIndex] = Value;
+        ans[4] = Key;
+        ans[5] = Value;
+        return ans;
+    }
+    
+    String[] QuizType2(){
+        Random generator = new Random();
+        List<String> keys = new ArrayList<String>(SlangWordList.keySet());
+        
+        String[] ans = new String[6];
+        String Key = keys.get(generator.nextInt(keys.size()));
+        String Value = SlangWordList.get(Key);
+        
+        for(int i=0; i<4; i++)
+        {
+            String randomKey = keys.get(generator.nextInt(keys.size()));
+            String randomValue = SlangWordList.get(randomKey);
+            ans[i] = randomKey;
+        }
+        
+        int randIndex = generator.nextInt((3-0) + 1) + 0;
+        ans[randIndex] = Key;
+        ans[4] = Value;
+        ans[5] = Key;
+        
+        return ans;
     }
     
     String[] DisplayRandom(){
@@ -113,6 +160,13 @@ public class DataGenerator {
         String randomKey = keys.get(generator.nextInt(keys.size()) );
         String value = SlangWordList.get(randomKey);
         return new String[] {randomKey, value};
+    }
+    
+    void Reset(){
+        SlangWordList.clear();
+        MeaningList.clear();
+        Create(default_path);
+        // remove subfile
     }
     
 }

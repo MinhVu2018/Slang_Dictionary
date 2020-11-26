@@ -266,12 +266,17 @@ public class SlangFrame extends javax.swing.JFrame {
         // random in 2 mth
         Random generator = new Random();
         int a = generator.nextInt(2);
-        if (a == 0)
+        String[] quiz = new String[6];
+        if (a == 0){
+            quiz = data.QuizType1();
             ResultOutput.setText("Type 1");
-        else 
+        }
+        else {
+            quiz = data.QuizType2();
             ResultOutput.setText("Type 2");
+        }
         
-        QuizFrame frame = new QuizFrame();
+        QuizFrame frame = new QuizFrame(quiz);
         frame.show();
     }//GEN-LAST:event_BtnQuizActionPerformed
 
