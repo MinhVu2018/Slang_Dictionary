@@ -97,39 +97,37 @@ public class DataGenerator {
         SlangWordList.remove(word);
     }
     
-    void Add(String word, String definition){
+    void AddSelection(String word, String definition, String selection){
+        String meaning = SlangWordList.get(word);
+        Remove(word);
+
+        if (selection.equals("Override"))
+            Add(word, definition);
+        else if(selection.equals("Duplicate"))
+        {
+            meaning += "| " + definition;
+            Add(word, meaning);
+        }
+    }
+    
+    String[] Add(String word, String definition){
         if (SlangWordList.get(word) == null){ // cannot find
             SlangWordList.put(word, definition);
             CreateMeaningList(word, definition.toLowerCase());
+            return new String[]{word, definition};
         }
         else{
-            DuplicateAddFrame frame = new DuplicateAddFrame(word, SlangWordList.get(word), definition);
-            frame.show();
-            
-            if (!frame.isVisible()){
-                System.out.println("herre");
-                String meaning = SlangWordList.get(word);
-                Remove(word);
-
-                System.out.println(frame.selection);
-                if (frame.selection.equals("Override"))
-                    Add(word, definition);
-                else if(frame.selection.equals("Duplicate"))
-                {
-                    meaning += "| " + definition;
-                    Add(word, meaning);
-                }
-            }
+//            DuplicateAddFrame frame = new DuplicateAddFrame(word, SlangWordList.get(word), definition);
+            return new String[] {word, SlangWordList.get(word), definition};
         }
     }
     
     void Edit(String word, String meaning){
-        word = word.toLowerCase();
         if (Search(word, 0) == "Cannot find")
             return;
-       
+        
         Remove(word);
-        Add(word, meaning);
+        AddSelection(word, meaning, "Override");
     }
     
     String[] QuizType1(){

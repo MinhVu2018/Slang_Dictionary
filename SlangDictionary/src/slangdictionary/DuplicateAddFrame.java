@@ -11,18 +11,26 @@ package slangdictionary;
  */
 public class DuplicateAddFrame extends javax.swing.JFrame {
     String selection = "None";
+    String word = new String();
+    String def = new String();
+    String meaning = new String();
     /**
      * Creates new form DuplicateAddFrame
      */
     public DuplicateAddFrame() {
         initComponents();
     }
-
-    public DuplicateAddFrame(String word, String meaning, String definition) {
-        initComponents();
+    
+    public void setInfo(String[] info){
+        word = info[0];
+        meaning = info[1];
+        def = info[2];     
+    }
+    
+    public void showInfo(){
         WordOutput.setText(word);
         MeaningOutput.setText(meaning);
-        DefinitionOutput.setText(definition);
+        DefinitionOutput.setText(def);
     }
     
     /**
@@ -138,14 +146,17 @@ public class DuplicateAddFrame extends javax.swing.JFrame {
 
     private void BtnOverrideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOverrideActionPerformed
         // TODO add your handling code here:
-        selection = "Override";
-        this.dispose();
+//        selection = "Override";
+//        
+//        this.dispose();
+        
     }//GEN-LAST:event_BtnOverrideActionPerformed
 
     private void BtnDuplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDuplicateActionPerformed
-        // TODO add your handling code here:
-        selection = "Duplicate";
-        this.dispose();
+//        // TODO add your handling code here:
+//        selection = "Duplicate";
+//        
+//        this.dispose();
     }//GEN-LAST:event_BtnDuplicateActionPerformed
 
     public String getSelection(){
@@ -189,8 +200,8 @@ public class DuplicateAddFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnDuplicate;
-    private javax.swing.JButton BtnOverride;
+    public javax.swing.JButton BtnDuplicate;
+    public javax.swing.JButton BtnOverride;
     private javax.swing.JTextField DefinitionOutput;
     private javax.swing.JTextField MeaningOutput;
     private javax.swing.JTextField WordOutput;

@@ -14,17 +14,21 @@ import javax.swing.ImageIcon;
  *
  * @author MinhVu
  */
-public class SlangFrame extends javax.swing.JFrame {
+public class SlangFrame extends javax.swing.JFrame{
 
     /**
      * Creates new form SlangFrame
      */
-    DataGenerator data = new DataGenerator();
-    public SlangFrame() {
-        data.Create("Data/slang.txt");
+    DataGenerator data;
+    public SlangFrame(){
+        initComponents();
+    }
+    
+    public SlangFrame(DataGenerator d) {
         initComponents();
         scaleImage();
         displaySlangDefinition();
+        data = d;
     }
 
     public void scaleImage(){
@@ -280,7 +284,8 @@ public class SlangFrame extends javax.swing.JFrame {
         }
         
         QuizFrame frame = new QuizFrame(quiz);
-        frame.show();
+//        frame.show();
+        frame.setVisible(true);
     }//GEN-LAST:event_BtnQuizActionPerformed
 
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
@@ -297,31 +302,37 @@ public class SlangFrame extends javax.swing.JFrame {
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
         // TODO add your handling code here:
 //        ResultOutput.setText("Add a new word. Confirm?");
-        String Word_Input = WordInput.getText().toUpperCase();
-        String Def_Input = DefInput.getText().toLowerCase();
         
-        if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty()){
-            data.Add(Word_Input, Def_Input);
-            ResultOutput.setText("Add successful");
-        }
-        else
-            ResultOutput.setText("Input word and definition");
+//        String Word_Input = WordInput.getText().toUpperCase();
+//        String Def_Input = DefInput.getText().toLowerCase();
+//        
+//        if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty()){
+////            data.getInfo(Word_Input, Def_Input);
+//            ResultOutput.setText("Add successful");
+//        }
+//        else
+//            ResultOutput.setText("Input word and definition");
     }//GEN-LAST:event_BtnAddActionPerformed
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
         // TODO add your handling code here:
-        ResultOutput.setText("Edit a word");
+//        ResultOutput.setText("Edit a word");
+        String Word_Input = WordInput.getText().toUpperCase();
+        String Def_Input = DefInput.getText();
+        data.Edit(Word_Input, Def_Input);
     }//GEN-LAST:event_BtnEditActionPerformed
 
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
         // TODO add your handling code here:
         ResultOutput.setText("Reset dictionary");
+        data.Reset();
     }//GEN-LAST:event_BtnResetActionPerformed
 
     private void BtnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistoryActionPerformed
         // TODO add your handling code here:
         HistoryFrame frame = new HistoryFrame(data.History);
-        frame.show();
+//        frame.show();
+        frame.setVisible(true);
     }//GEN-LAST:event_BtnHistoryActionPerformed
 
     private void BtnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRandomActionPerformed
@@ -381,7 +392,7 @@ public class SlangFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AnsArea;
-    private javax.swing.JButton BtnAdd;
+    public javax.swing.JButton BtnAdd;
     private javax.swing.JButton BtnDelete;
     private javax.swing.JButton BtnEdit;
     private javax.swing.JButton BtnFind;
@@ -390,12 +401,13 @@ public class SlangFrame extends javax.swing.JFrame {
     private javax.swing.JButton BtnRandom;
     private javax.swing.JButton BtnReset;
     private javax.swing.JLabel DefArea;
-    private javax.swing.JTextField DefInput;
+    public javax.swing.JTextField DefInput;
     private javax.swing.JLabel LogoLabel;
     private javax.swing.JTextArea ResultOutput;
     private javax.swing.JLabel SlangDef;
     private javax.swing.JLabel WordArea;
-    private javax.swing.JTextField WordInput;
+    public javax.swing.JTextField WordInput;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
 }
