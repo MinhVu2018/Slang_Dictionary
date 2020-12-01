@@ -24,8 +24,9 @@ public class SlangDictionary implements ActionListener {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        data.Create("Data/Slang.txt");
-        
+//        data.Create("Data/Slang.txt");
+        data.Build();
+
         SlangDictionary obj = new SlangDictionary();
         
         frame1 = new SlangFrame(data);

@@ -5,8 +5,7 @@
  */
 package slangdictionary;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -19,9 +18,78 @@ public class DataGenerator {
     Deque<String> History = new ArrayDeque<String>();
     
     String default_path = "Data/slang_default.txt";
-    String history_file_path = "Data/history.txt";
-    String meaning_file_path = "Data/meaning.txt";
-    String slang_file_path = "Data/slang.txt";
+//    String history_file_path = "Data/history.txt";
+    String meaning_file_path = "Data/meaning.ser";
+    String slang_file_path = "Data/slang.ser";
+    
+    void LoadSlangWordList(){
+        try{
+            FileInputStream fis = new FileInputStream(slang_file_path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            
+            SlangWordList = (HashMap) ois.readObject();
+            ois.close();
+            fis.close();
+            
+        }catch(IOException ioe)
+        {
+            ioe.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c){
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }
+    }
+ 
+    void LoadMeaningList(){
+        try{
+            FileInputStream fis = new FileInputStream(meaning_file_path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            
+            MeaningList = (HashMap) ois.readObject();
+            ois.close();
+            fis.close();
+            
+        }catch(IOException ioe)
+        {
+            ioe.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c){
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }
+    }
+    
+    void SaveSlangWordList(){
+        try{
+            FileOutputStream fos = new FileOutputStream(slang_file_path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(SlangWordList);
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+    
+    void SaveMeaningList(){
+        try{
+            FileOutputStream fos = new FileOutputStream(meaning_file_path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(MeaningList);
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+    
+    void Build(){
+        LoadSlangWordList();
+        LoadMeaningList();
+    }
     
     void Create(String file_path){
         try {
@@ -38,6 +106,9 @@ public class DataGenerator {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        SaveSlangWordList();
+        SaveMeaningList();
+        
     }    
     
     void CreateMeaningList(String word, String meaning){
@@ -108,6 +179,9 @@ public class DataGenerator {
             meaning += "| " + definition;
             Add(word, meaning);
         }
+        
+        SaveSlangWordList();
+        SaveMeaningList();
     }
     
     String[] Add(String word, String definition){
@@ -189,6 +263,6 @@ public class DataGenerator {
         MeaningList.clear();
         Create(default_path);
         // remove subfile
-    }
-    
+        Build();
+    }    
 }
