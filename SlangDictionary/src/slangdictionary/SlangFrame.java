@@ -300,8 +300,12 @@ public class SlangFrame extends javax.swing.JFrame{
 //        ResultOutput.setText("Edit a word");
         String Word_Input = WordInput.getText().toUpperCase();
         String Def_Input = DefInput.getText();
-        data.Edit(Word_Input, Def_Input);
-        ResultOutput.setText("Edit successful");
+        if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty()){    
+            data.Edit(Word_Input, Def_Input);
+            ResultOutput.setText("Edit successful");
+        }
+        else
+            ResultOutput.setText("Incorrect syntax");
     }//GEN-LAST:event_BtnEditActionPerformed
 
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
@@ -322,6 +326,7 @@ public class SlangFrame extends javax.swing.JFrame{
         
         WordInput.setText(temp[0]);
         DefInput.setText(temp[1]);
+        ResultOutput.setText("");
     }//GEN-LAST:event_BtnRandomActionPerformed
 
     private void WordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WordInputKeyPressed
