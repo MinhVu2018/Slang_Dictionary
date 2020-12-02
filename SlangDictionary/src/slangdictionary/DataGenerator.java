@@ -108,7 +108,6 @@ public class DataGenerator {
         }
         SaveSlangWordList();
         SaveMeaningList();
-        
     }    
     
     void CreateMeaningList(String word, String meaning){
@@ -147,10 +146,15 @@ public class DataGenerator {
             intersectionSet.retainAll(MeaningList.get(temp[i])); 
 
         String t = intersectionSet.toString();
-        temp = t.split(" ");
+        
+        temp = t.split(", ");
         String ans = new String();
-        for(int i=0; i<temp.length; i++)
-            ans += temp[i];
+        for(int i=0; i<temp.length; i++){
+            ans += temp[i] + "\r\n";
+        }
+        
+        ans = ans.replace("[", "");
+        ans = ans.replace("]", "");
         return ans;
     }
     
@@ -166,6 +170,8 @@ public class DataGenerator {
                 MeaningList.get(temp[i]).remove(word);
         
         SlangWordList.remove(word);
+        SaveSlangWordList();
+        SaveMeaningList();
     }
     
     void AddSelection(String word, String definition, String selection){
@@ -262,7 +268,6 @@ public class DataGenerator {
         SlangWordList.clear();
         MeaningList.clear();
         Create(default_path);
-        // remove subfile
-        Build();
     }    
+    
 }

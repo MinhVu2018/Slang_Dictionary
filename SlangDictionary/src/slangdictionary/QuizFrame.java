@@ -6,6 +6,7 @@
 package slangdictionary;
 
 import java.util.Enumeration;
+import java.util.Random;
 import javax.swing.AbstractButton;
 
 /**
@@ -19,14 +20,32 @@ public class QuizFrame extends javax.swing.JFrame {
      */
     
     String ans = new String();
+    DataGenerator data;
     
     public QuizFrame() {
         initComponents();
     }
 
-    public QuizFrame(String[] quiz){
+    public QuizFrame(DataGenerator d){
         initComponents();
-        
+        data = d;
+        CreateQuiz();
+    }
+    
+    void CreateQuiz(){
+        Random generator = new Random();
+        int a = generator.nextInt(2);
+        String[] quizArray = new String[6];
+        if (a == 0){
+            quizArray = data.QuizType1();
+        }
+        else {
+            quizArray = data.QuizType2();
+        }
+        DisplayQuiz(quizArray);
+    }
+    
+    void DisplayQuiz(String[] quiz){
         // quiz[option1, option2, option3, option4, question]
         Question.setText(quiz[4]);
         Option1.setText(quiz[0]);
@@ -52,6 +71,7 @@ public class QuizFrame extends javax.swing.JFrame {
         Option3 = new javax.swing.JRadioButton();
         Option4 = new javax.swing.JRadioButton();
         Submit = new javax.swing.JButton();
+        TryAgain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quiz");
@@ -90,10 +110,17 @@ public class QuizFrame extends javax.swing.JFrame {
             }
         });
 
-        Submit.setText("Spam");
+        Submit.setText("Submit");
         Submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmitActionPerformed(evt);
+            }
+        });
+
+        TryAgain.setText("New Quiz");
+        TryAgain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TryAgainActionPerformed(evt);
             }
         });
 
@@ -113,9 +140,11 @@ public class QuizFrame extends javax.swing.JFrame {
                         .addComponent(Question, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
+                .addGap(41, 41, 41)
                 .addComponent(Submit)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TryAgain)
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,9 +159,11 @@ public class QuizFrame extends javax.swing.JFrame {
                 .addComponent(Option3)
                 .addGap(18, 18, 18)
                 .addComponent(Option4)
-                .addGap(18, 18, 18)
-                .addComponent(Submit)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Submit)
+                    .addComponent(TryAgain))
+                .addContainerGap())
         );
 
         pack();
@@ -162,7 +193,6 @@ public class QuizFrame extends javax.swing.JFrame {
                 return button.getText();
             }
         }
-
         return null;
     }
     
@@ -171,8 +201,15 @@ public class QuizFrame extends javax.swing.JFrame {
         if (ans.equals(getSelectedButtonText()))
             Submit.setText("Correct!");
         else
-            Submit.setText("Try Again");
+            Submit.setText("Incorrect!");
     }//GEN-LAST:event_SubmitActionPerformed
+
+    private void TryAgainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TryAgainActionPerformed
+        // TODO add your handling code here:
+        buttonGroup1.clearSelection();
+        Submit.setText("Submit");
+        CreateQuiz();
+    }//GEN-LAST:event_TryAgainActionPerformed
     
     /**
      * @param args the command line arguments
@@ -218,6 +255,7 @@ public class QuizFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton Option4;
     private javax.swing.JLabel Question;
     private javax.swing.JButton Submit;
+    private javax.swing.JButton TryAgain;
     private javax.swing.ButtonGroup buttonGroup1;
     // End of variables declaration//GEN-END:variables
 }

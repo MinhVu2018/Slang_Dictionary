@@ -33,6 +33,7 @@ public class SlangDictionary implements ActionListener {
         frame1.BtnAdd.addActionListener(obj);
         // show frame
         frame1.setVisible(true);
+        
     }
 
     public void actionPerformed(ActionEvent e){
@@ -46,12 +47,14 @@ public class SlangDictionary implements ActionListener {
             if (!Word_Input.trim().isEmpty() && !Def_Input.trim().isEmpty()){    
                 
                 if (temp.length == 2) // add new word
-                    System.out.println("Add new word");
+                    frame1.ResultOutput.setText("Add new word");
                 else // override or dupplicate
                     create_frame2(temp);
+                
+                frame1.ResultOutput.setText("Add successful");
             }
             else
-                System.out.println("Incorrect syntax"); 
+                frame1.ResultOutput.setText("Incorrect syntax"); 
         }
         if (button.equals("Duplicate")){
             data.AddSelection(temp[0], temp[2], "Duplicate");
