@@ -6,6 +6,7 @@
 package slangdictionary;
 
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import javax.swing.ImageIcon;
@@ -341,6 +342,7 @@ public class SlangFrame extends javax.swing.JFrame{
             Searching();
     }//GEN-LAST:event_DefInputKeyPressed
 
+    
     /**
      * @param args the command line arguments
      */

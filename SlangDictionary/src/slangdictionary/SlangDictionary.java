@@ -3,10 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+references:
+https://stackoverflow.com/questions/9093448/how-to-capture-a-jframes-close-button-click-event
+https://www.sanfoundry.com/java-program-create-frames-switch-frames-using-buttons/
+*/
+
 package slangdictionary;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +31,6 @@ public class SlangDictionary implements ActionListener {
     public static void main(String[] args) {
         // TODO code application logic here
         
-//        data.Create("Data/Slang.txt");
         data.Build();
 
         SlangDictionary obj = new SlangDictionary();
@@ -34,6 +40,13 @@ public class SlangDictionary implements ActionListener {
         // show frame
         frame1.setVisible(true);
         
+        frame1.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                data.SaveMeaningList();
+                data.SaveSlangWordList();
+            }
+        });
     }
 
     public void actionPerformed(ActionEvent e){

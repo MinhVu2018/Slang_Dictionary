@@ -106,8 +106,6 @@ public class DataGenerator {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        SaveSlangWordList();
-        SaveMeaningList();
     }    
     
     void CreateMeaningList(String word, String meaning){
@@ -170,8 +168,6 @@ public class DataGenerator {
                 MeaningList.get(temp[i]).remove(word);
         
         SlangWordList.remove(word);
-        SaveSlangWordList();
-        SaveMeaningList();
     }
     
     void AddSelection(String word, String definition, String selection){
@@ -186,8 +182,6 @@ public class DataGenerator {
             Add(word, meaning);
         }
         
-        SaveSlangWordList();
-        SaveMeaningList();
     }
     
     String[] Add(String word, String definition){
